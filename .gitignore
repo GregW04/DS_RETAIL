@@ -1,0 +1,6 @@
+# Ignore data folders
+data_f5/
+data_favorita/
+
+# Ignore macOS system files
+.DS_Store
