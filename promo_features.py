@@ -173,3 +173,4 @@ def promo_features_all(df: pd.DataFrame,
     df = add_promo_next_7days_flag(df, group_cols=group_cols, date_col=date_col,
                                    promo_col=promo_col, window=window, pre_sorted=pre_sorted)
     return df
+
