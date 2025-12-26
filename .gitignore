@@ -4,3 +4,5 @@ data_favorita/
 
 # Ignore macOS system files
 .DS_Store
+
+cache/
