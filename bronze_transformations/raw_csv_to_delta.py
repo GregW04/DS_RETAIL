@@ -11,8 +11,8 @@ holidays = spark.read.format("csv").option("header", "true").load("/Volumes/work
 
 # COMMAND ----------
 
-train.write.mode("overwrite").format("delta").save("/Volumes/workspace/favorita/bronze/sales")
-oil.write.mode("overwrite").format("delta").save("/Volumes/workspace/favorita/bronze/oil")
-stores.write.mode("overwrite").format("delta").save("/Volumes/workspace/favorita/bronze/stores")
-items.write.mode("overwrite").format("delta").save("/Volumes/workspace/favorita/bronze/items")
-holidays.write.mode("overwrite").format("delta").save("/Volumes/workspace/favorita/bronze/holidays")
+train.write.mode("overwrite").format("delta").save("/Volumes/workspace/favorita/raw/sales")
+oil.write.mode("overwrite").format("delta").save("/Volumes/workspace/favorita/raw/oil")
+stores.write.mode("overwrite").format("delta").save("/Volumes/workspace/favorita/raw/stores")
+items.write.mode("overwrite").format("delta").save("/Volumes/workspace/favorita/raw/items")
+holidays.write.mode("overwrite").format("delta").save("/Volumes/workspace/favorita/raw/holidays")
