@@ -3,17 +3,6 @@ import pyspark.sql.functions as F
 from pyspark.sql.window import Window
 from pyspark.sql.types import DoubleType
 
-def extend_sales_table(sales_df: pyspark.sql.DataFrame, items_df: pyspark.sql.DataFrame, stores_df: pyspark.sql.DataFrame, product_level: str = "item_nbr", business_level: str = "store_nbr") -> pyspark.sql.DataFrame:
-    """
-    Extend the sales table with holidays and store information.
-    """
-    items_df.dropDuplicates(subset=[product_level])
-    stores_df.dropDuplicates(subset=[business_level])
-
-    sales_items = sales_df.join(items_df, on=product_level, how="left")
-    sales_items_stores = sales_items.join(stores_df, on=business_level, how="left")
-    return sales_items_stores
-
 def linear_interpolation(
     data: pyspark.sql.DataFrame,
     column_name: str,
@@ -135,26 +124,3 @@ def fill_time_series_with_dates(df, date_col):
     # 3) left join z oryginalnymi danymi
     df_full = dates_df.join(df, on=date_col, how="left")
     return df_full
-
-def handle_missing_promo(
-    df: pyspark.sql.DataFrame,
-    promo_col: str = "onpromotion",
-    strategy: str = "nan"
-) -> pyspark.sql.DataFrame:
-    """
-    Handle missing values in the 'onpromotion' column of a DataFrame.
-
-    Parameters:
-        df (pyspark.sql.DataFrame): The input DataFrame.
-        promo_col (str): The name of the column containing promotion information.
-        strategy (str): The strategy to use for handling missing values. Valid options are "nan" (stay with NaN) and "category" (replace NaNs with new category: "None")
-    """
-    if strategy == "nan":
-        return df
-    elif strategy == "category":
-        return df.withColumn(
-            promo_col,
-            F.when(F.isnan(F.col(promo_col)), F.lit("None")).otherwise(F.col(promo_col))
-        )
-    else:
-        raise ValueError(f"Invalid strategy: {strategy}")
